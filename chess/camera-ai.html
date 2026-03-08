@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Camera Chessboard Recognition (Prototype)</h2>
+
+<video id="video" width="400" autoplay></video>
+
+<script>
+
+navigator.mediaDevices.getUserMedia({video:true})
+.then(stream=>{
+
+document.getElementById("video").srcObject=stream
+
+})
+
+</script>
+
+<p>Future version will detect chessboard and convert to FEN.</p>
+
+</body>
+</html>

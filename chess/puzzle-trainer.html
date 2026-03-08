@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/chessboard.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/chessboard.min.js"></script>
+</head>
+
+<body>
+
+<h2>Puzzle Trainer</h2>
+
+<div id="board" style="width:450px"></div>
+
+<p id="result"></p>
+
+<script>
+
+var puzzle={
+fen:"8/8/8/2k5/8/3K4/8/8 w - - 0 1",
+solution:"Kd4"
+}
+
+var game=new Chess()
+game.load(puzzle.fen)
+
+var board=Chessboard('board',{
+position:puzzle.fen,
+draggable:true,
+onDrop:move
+})
+
+function move(s,t){
+
+var m=game.move({from:s,to:t,promotion:'q'})
+
+if(!m) return 'snapback'
+
+if(m.san==puzzle.solution)
+document.getElementById("result").innerHTML="Correct"
+else
+document.getElementById("result").innerHTML="Try again"
+
+}
+
+</script>
+
+</body>
+</html>

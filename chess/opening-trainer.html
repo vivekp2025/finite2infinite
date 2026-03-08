@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/chessboard.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/chessboard.min.js"></script>
+</head>
+
+<body>
+
+<h2>Opening Trainer</h2>
+
+<div id="board" style="width:450px"></div>
+
+<p id="status"></p>
+
+<script>
+
+var board
+var game = new Chess()
+
+var line=["e4","e5","Nf3","Nc6","Bb5"]
+var index=0
+
+board = Chessboard('board',{
+draggable:true,
+position:'start',
+onDrop:move
+})
+
+function move(s,t){
+
+var m=game.move({from:s,to:t,promotion:'q'})
+
+if(m===null) return 'snapback'
+
+if(m.san==line[index]){
+document.getElementById("status").innerHTML="Correct move"
+index++
+}else{
+document.getElementById("status").innerHTML="Wrong move"
+game.undo()
+}
+
+}
+
+</script>
+
+</body>
+</html>

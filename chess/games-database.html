@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Games Database</h2>
+
+<select id="list"></select>
+
+<pre id="game"></pre>
+
+<script>
+
+fetch("data/games.pgn")
+.then(r=>r.text())
+.then(data=>{
+
+var games=data.split("[Event")
+
+var list=document.getElementById("list")
+
+games.forEach((g,i)=>{
+
+if(g.trim()=="") return
+
+var opt=document.createElement("option")
+opt.value=i
+opt.text="Game "+i
+list.appendChild(opt)
+
+})
+
+list.onchange=function(){
+document.getElementById("game").innerText="[Event"+games[this.value]
+}
+
+})
+
+</script>
+
+</body>
+</html>

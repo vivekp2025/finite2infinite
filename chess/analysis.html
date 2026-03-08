@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Chess Analysis</title>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/chessboard.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/chessboard.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stockfish/stockfish.js"></script>
+</head>
+
+<body>
+
+<h2>Engine Analysis</h2>
+
+<div id="board" style="width:450px"></div>
+
+<button onclick="analyze()">Analyze</button>
+
+<p>Evaluation: <span id="eval">0</span></p>
+<p>Best Move: <span id="best"></span></p>
+
+<script>
+
+var board = Chessboard('board','start')
+var game = new Chess()
+
+var engine = STOCKFISH()
+
+engine.onmessage = function(e){
+
+var line=e.data
+
+if(line.includes("score cp")){
+var v=line.split("score cp ")[1].split(" ")[0]
+document.getElementById("eval").innerHTML=v/100
+}
+
+if(line.includes("bestmove")){
+document.getElementById("best").innerHTML=line.split(" ")[1]
+}
+
+}
+
+function analyze(){
+engine.postMessage("position fen "+game.fen())
+engine.postMessage("go depth 12")
+}
+
+</script>
+
+</body>
+</html>
